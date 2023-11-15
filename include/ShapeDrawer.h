@@ -1,60 +1,25 @@
 #pragma once
 
 #include "Include.h"
-#include "ShapeManager.h"
 #include "InputManager.h"
-#include "DataManager.h"
 
-/*! @brief Class for drawing shapes on a window.
- *
- *  This class provides functionality to create a window, manage shapes, and draw them on the window.
- *  It also handles user input and provides a main menu for interaction.
- */
 class ShapeDrawer
 {
 public:
-    /*! @brief Constructor for the ShapeDrawer class.
-     *
-     *  @param windowSize The size of the window to be created.
-     */
-    ShapeDrawer(cv::Size windowSize = cv::Size(1920, 1080));
+	ShapeDrawer();
 
-    /*! @brief Run the shape drawing application.
-     *
-     *  This function starts the main loop of the application, handling user input and drawing shapes on the window.
-     */
-    void run() const;
-
-    /*! @brief Get the window associated with the ShapeDrawer.
-     *
-     *  @return A shared pointer to the window.
-     */
-    const std::shared_ptr<Window>& get_window() const;
-
-    /*! @brief Get the ShapeManager associated with the ShapeDrawer.
-     *
-     *  @return A shared pointer to the ShapeManager.
-     */
-    const std::shared_ptr<ShapeManager>& get_shapeManager() const;
-
-    /*! @brief Get the DataManager associated with the ShapeDrawer.
-     *
-     *  @return A shared pointer to the DataManager.
-     */
-    const std::shared_ptr<DataManager>& get_dataManager() const;
-
-    /*! @brief Close the ShapeDrawer application. */
-    void close();
+	void start();
 
 private:
-    std::shared_ptr<Window> m_window;             //!< The window used for drawing shapes.
-    std::shared_ptr<DataManager> m_data;          //!< The data manager for managing shape data.
-    std::shared_ptr<ShapeManager> m_shapes;       //!< The shape manager for managing shapes.
-    bool m_shouldClose;                          //!< Flag indicating whether the application should close.
+	std::shared_ptr<hgui::kernel::Window> m_window;
+	std::shared_ptr<hgui::kernel::Monitor> m_monitor;
+	std::shared_ptr<hgui::kernel::Font> m_font;
 
-    /*! @brief Display the main menu on the console.
-     *
-     *  This function prints the main menu options to the console.
-     */
-    void main_menu() const;
+	std::vector<std::shared_ptr<hgui::kernel::Label>> m_texts;
+	std::shared_ptr<hgui::kernel::Sprite> m_logo;
+	std::shared_ptr<hgui::kernel::Canvas> m_canvas;
+
+	void set_main_menu();
+	void draw();
+	void option_menu();
 };

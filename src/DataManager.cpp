@@ -1,6 +1,6 @@
-#include "../include/ShapeDrawer/DataManager.h"
+#include "../include/DataManager.h"
 
-DataManager::DataManager(std::shared_ptr<ShapeManager> shapes)
+DataManager::DataManager(const std::shared_ptr<hgui::kernel::Drawer>& shapes)
 	: m_shapes(shapes), m_names()
 {
 	m_names["circle"] = CIRCLE;
@@ -11,23 +11,23 @@ DataManager::DataManager(std::shared_ptr<ShapeManager> shapes)
 	m_names["triangle"] = TRIANGLE;
 }
 
-void DataManager::load(std::string path)
+void DataManager::load(const std::string& path)
 {
-	std::string line;
-	std::ifstream myfile(path);
-	if (myfile.is_open())
+	if (std::ifstream file(path); file.is_open())
 	{
-		while (std::getline(myfile, line))
+		std::string line;
+		while (std::getline(file, line))
 		{
-			if (!parseur(line))
-			{
-				continue;
-			}
 			std::stringstream ss(line);
 			std::string name;
 
 			ss >> name;
-			std::transform(name.begin(), name.end(), name.begin(), [](unsigned char c) { return std::tolower(c); });
+			std::ranges::transform(name, name.begin(), [](const unsigned char c) { return std::tolower(c); });
+
+			if (!m_names.contains(name))
+			{
+				continue;
+			}
 
 			int r; int g; int b;
 			int thickness;
@@ -41,7 +41,7 @@ void DataManager::load(std::string path)
 				ss >> r; ss >> g; ss >> b;
 				ss >> thickness;
 
-				m_shapes->create_circle(cv::Point(x, y), radius, cv::Scalar(b, g, r), thickness);
+				m_shapes->draw_circle(hgui::point(x, y), radius, hgui::color(r, g, b), thickness == -1, thickness);
 
 				break;
 			case RECTANGLE:
@@ -53,7 +53,7 @@ void DataManager::load(std::string path)
 				ss >> r; ss >> g; ss >> b;
 				ss >> thickness;
 
-				m_shapes->create_rectangle(cv::Point(x1, y1), cv::Point(x2, y2), cv::Scalar(b, g, r), thickness);
+				m_shapes->draw_rectangle(hgui::point(x1, y1), hgui::point(x2, y2), hgui::color(r, g, b), thickness == -1, thickness);
 
 				break;
 			}
@@ -66,7 +66,7 @@ void DataManager::load(std::string path)
 				ss >> r; ss >> g; ss >> b;
 				ss >> thickness;
 
-				m_shapes->create_straight_line(cv::Point(x1, y1), cv::Point(x2, y2), cv::Scalar(b, g, r), thickness);
+				m_shapes->draw_line(hgui::point(x1, y1), hgui::point(x2, y2), hgui::color(r, g, b), thickness);
 
 				break;
 			}
@@ -80,15 +80,13 @@ void DataManager::load(std::string path)
 				ss >> r; ss >> g; ss >> b;
 				ss >> thickness;
 
-				m_shapes->create_triangle(cv::Point(x1, y1), cv::Point(x2, y2), cv::Point(x3, y3), cv::Scalar(b, g, r), thickness);
+				m_shapes->draw_triangle(hgui::point(x1, y1), hgui::point(x2, y2), hgui::point(x3, y3), hgui::color(r, g, b), thickness == -1, thickness);
 
 				break;
 			}
-			default:
-				break;
 			}
 		}
-		myfile.close();
+		file.close();
 	}
 	else
 	{
@@ -96,11 +94,9 @@ void DataManager::load(std::string path)
 	}
 }
 
-void DataManager::save(std::string path)
+void DataManager::save(const std::string& path)
 {
-	std::ofstream file(path);
-
-	if (file.is_open())
+	if (std::ofstream file(path); file.is_open())
 	{
 		for (const auto& shape : m_shapes->get_shapes())
 		{
@@ -154,17 +150,4 @@ void DataManager::save(std::string path)
 	{
 		throw std::runtime_error(("FAILED TO LOAD FILE : " + path).c_str());
 	}
-}
-
-bool DataManager::parseur(const std::string& line) const
-{
-	std::stringstream sstream(line);
-	std::string name;
-	sstream >> name;
-	std::transform(name.begin(), name.end(), name.begin(), [](unsigned char c) { return std::tolower(c); });
-	if (m_names.find(name) == m_names.end())
-	{
-		return false;
-	}
-	return true;
 }
