@@ -1,6 +1,6 @@
 # ShapeDrawer
 
-![ShapeDrawer's Logo](assets/ShapeDrawerName.png)
+![ShapeDrawer's Logo](assets/textures/ShapeDrawer.png)
 
 ## Introduction
 
@@ -9,47 +9,57 @@ With just a few clicks or simple commands, you can create basic shapes such as c
 
 ## Installation Instructions
 
-You can get the code from scratch or download the [release version]().
+> You can also simply install a pre-built version [here](https://github.com/Horizon-NTH/ShapeDrawer/releases).
 
-* Get the source code
+### Get Source Code
 
-    First, clone the [repository](https://github.com/Horizon-NTH/ShapeDrawer) using [git](https://git-scm.com):
+You first need to clone the [repository](https://github.com/Horizon-NTH/ShapeDrawer). Make sure to use [git](https://git-scm.com) and don't forget to include `--recurse-submodules` when cloning.
 
-    ```bash
-    git clone https://github.com/Horizon-NTH/ShapeDrawer
-    ```
+```bash
+git clone https://github.com/Horizon-NTH/ShapeDrawer --recurse-submodules
+```
 
-* Create the build environment
+You will now able to choose between [script](#script-installation) or [manual](#manual-installation) installation
 
-    The project uses [CMake](https://cmake.org/) to generate the build environment. Make sure you have CMake installed on your system.
+- ### Script Installation
 
-    ```bash
-    cd ShapeDrawer
-    mkdir build && cd build
-    cmake ..
-    ```
+  Use the [`install.sh`](https://github.com/Horizon-NTH/ShapeDrawer/blob/master/install.sh) script to compile the executable. You can choose to erase build files by adding `-e` / `--erase`.
 
-* Build
+  ```bash
+  ./install.sh --erase
+  ```
 
-  * **Using CMake**
+- ### Manual Installation
 
-    You can build directly using CMake:
+  #### Create Build Environment
+
+  Ensure you have [CMake](https://cmake.org/) installed. Generate the build environment using CMake. 
+
+  ```bash
+  cd ShapeDrawer
+  mkdir build && cd build
+  cmake ..
+  ```
+
+  #### Build
+
+  - ##### CMake
+
+    Build directly using CMake:
 
     ```bash
     cmake --build .
     ```
 
-    This command will create the executable `ShapeDrawer.exe` in the main folder of the git repository.
+    This command will create all the executable in the main folder.
 
-  * **Using Microsoft Visual Studio**
+  - ##### Microsoft Visual Studio
 
-    Alternatively, you can use [Microsoft Visual Studio](https://visualstudio.microsoft.com/) to open the project and build it. Simply open the `ShapeDrawer.sln` file with Microsoft Visual Studio.
-
-    ⚠️ Note: The application needs to be built with at least C++17.
+    Alternatively, you can use [Microsoft Visual Studio](https://visualstudio.microsoft.com/) to launch the project and build it. Open the `shapedrawer.sln` file with Microsoft Visual Studio.
 
 ## Usage
 
-To learn how to use this application, please refer to the [documentation](docs/DOCUMENTATION.md).
+To learn how to use this application, please refer to the [wiki](https://github.com/Horizon-NTH/ShapeDrawer/wiki).
 
 ## Dependencies
 
