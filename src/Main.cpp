@@ -2,8 +2,7 @@
 
 int main()
 {
-	ShapeDrawer application;
-	application.get_dataManager()->load("../assets/data.txt");
-	application.run();
+	const ShapeDrawer application;
+	application.start();
 	return 0;
 }
