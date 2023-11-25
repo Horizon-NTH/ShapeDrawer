@@ -9,7 +9,7 @@ ShapeDrawer::ShapeDrawer() : m_window(nullptr),
                              m_dataManager(nullptr),
                              m_logo(nullptr),
                              m_canvas(nullptr),
-                             m_toDraw(std::make_tuple(shape::CIRCLE, HGUI_COLOR_BLUE, 20, false)),
+                             m_toDraw(ShapeToDraw(shape::CIRCLE, HGUI_COLOR_BLUE, 20.f, false)),
                              m_randomDrawing
                              (false)
 {
@@ -159,22 +159,22 @@ void ShapeDrawer::draw_background() const
 		case shape::RECTANGLE:
 			m_canvas->get_drawer()->draw_rectangle(randomPoint(), randomPoint(), hgui::color(
 				                                       static_cast<float>(std::rand()) / RAND_MAX, static_cast<float>(std::rand()) / RAND_MAX, static_cast<float>(std::rand()) / RAND_MAX),
-			                                       hgui::random(0.5), std::rand() % 99 + 1);
+			                                       hgui::random(0.5), static_cast<float>(std::rand() % 99 + 1));
 			break;
 		case shape::TRIANGLE:
 			m_canvas->get_drawer()->draw_triangle(randomPoint(), randomPoint(), randomPoint(), hgui::color(
 				                                      static_cast<float>(std::rand()) / RAND_MAX, static_cast<float>(std::rand()) / RAND_MAX, static_cast<float>(std::rand()) / RAND_MAX),
-			                                      hgui::random(0.5), std::rand() % 99 + 1);
+			                                      hgui::random(0.5), static_cast<float>(std::rand() % 99 + 1));
 			break;
 		case shape::CIRCLE:
-			m_canvas->get_drawer()->draw_circle(randomPoint(), std::rand() % 1000, hgui::color(
+			m_canvas->get_drawer()->draw_circle(randomPoint(), static_cast<float>(std::rand() % 1000), hgui::color(
 				                                    static_cast<float>(std::rand()) / RAND_MAX, static_cast<float>(std::rand()) / RAND_MAX, static_cast<float>(std::rand()) / RAND_MAX),
-			                                    hgui::random(0.5), std::rand() % 99 + 1);
+			                                    hgui::random(0.5), static_cast<float>(std::rand() % 99 + 1));
 			break;
 		case shape::LINE:
 			m_canvas->get_drawer()->draw_line(randomPoint(), randomPoint(), hgui::color(
 				                                  static_cast<float>(std::rand()) / RAND_MAX, static_cast<float>(std::rand()) / RAND_MAX, static_cast<float>(std::rand()) / RAND_MAX),
-			                                  std::rand() % 99 + 1);
+			                                  static_cast<float>(std::rand() % 99 + 1));
 			break;
 		}
 	}
@@ -198,10 +198,10 @@ void ShapeDrawer::set_main_menu()
 
 	m_texts.push_back(hgui::LabelManager::create("Press any key", hgui::point(0), m_font,
 	                                             {100u, HGUI_COLOR_WHITE, 1.0f}));
-	m_texts.back()->set_position(hgui::point(50_em) - m_texts.back()->get_size() / 2);
+	m_texts.back()->set_position(hgui::point(50_em) - m_texts.back()->get_size() / 2 + hgui::point(0, 10_em));
 	m_texts.push_back(hgui::LabelManager::create("to start.", hgui::point(0), m_font,
 	                                             {100u, HGUI_COLOR_WHITE, 1.0f}));
-	m_texts.back()->set_position(hgui::point(50_em) - m_texts.back()->get_size() / 2 + hgui::point(0, 2_em) +
+	m_texts.back()->set_position(hgui::point(50_em) - m_texts.back()->get_size() / 2 + hgui::point(0, 12_em) +
 		hgui::point(0, m_texts[2]->get_size().height));
 
 	auto start = [this](const hgui::keys& key, const hgui::actions& action)
@@ -242,6 +242,8 @@ void ShapeDrawer::set_option_menu()
 			                                                m_canvas->unbind(hgui::MouseAction(hgui::buttons::RIGHT, hgui::actions::PRESS));
 			                                                m_canvas->unbind(hgui::inputs::SCROLL_UP);
 			                                                m_canvas->unbind(hgui::inputs::SCROLL_DOWN);
+			                                                hgui::KeyBoardManager::unbind(hgui::KeyBoardAction(hgui::keys::ESCAPE, hgui::actions::RELEASE));
+			                                                hgui::KeyBoardManager::bind(hgui::KeyBoardAction(hgui::keys::ESCAPE, hgui::actions::RELEASE), hgui::end);
 			                                                set_main_menu();
 			                                                start();
 		                                                }, hgui::size(BUTTON_SIZE), get_position(1, 2),
