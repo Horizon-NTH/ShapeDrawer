@@ -10,7 +10,8 @@ ShapeDrawer::ShapeDrawer() : m_window(nullptr),
                              m_logo(nullptr),
                              m_canvas(nullptr),
                              m_toDraw(std::make_tuple(shape::CIRCLE, HGUI_COLOR_BLUE, 20, false)),
-                             m_randomDrawing(false)
+                             m_randomDrawing
+                             (false)
 {
 	// Library initialization //
 	hgui::init();
