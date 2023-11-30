@@ -79,7 +79,6 @@ void ShapeDrawer::option_menu()
 
 void ShapeDrawer::draw_shape()
 {
-	typedef std::tuple<shape, hgui::color, float, bool> ShapeToDraw;
 	if (!m_randomDrawing)
 	{
 		switch (std::get<0>(m_toDraw))

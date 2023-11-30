@@ -5,7 +5,6 @@ project(ShapeDrawer VERSION 1.0.0)
 add_subdirectory(deps/HorizonGUI)
 
 file(GLOB_RECURSE HEADER_FILES include/*.h)
-
 file(GLOB_RECURSE SOURCE_FILES src/*.cpp)
 
 add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
