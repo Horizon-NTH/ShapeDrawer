@@ -38,9 +38,11 @@ void DataManager::load(const std::string& path)
 					hgui::point center;
 					float radius;
 					bool fill;
+					float x;
+					float y;
 
-					ss >> center.x;
-					ss >> center.y;
+					ss >> x >> y;
+					center = hgui::point(x, y);
 					ss >> radius;
 					ss >> color.r;
 					ss >> color.g;
@@ -54,13 +56,16 @@ void DataManager::load(const std::string& path)
 				}
 			case shape::RECTANGLE:
 				{
-					hgui::point topLeftVertex, bottomRightVertex;
+					hgui::point topLeftVertex;
+					hgui::point bottomRightVertex;
 					bool fill;
+					float x;
+					float y;
 
-					ss >> topLeftVertex.x;
-					ss >> topLeftVertex.y;
-					ss >> bottomRightVertex.x;
-					ss >> bottomRightVertex.y;
+					ss >> x >> y;
+					topLeftVertex = hgui::point(x, y);
+					ss >> x >> y;
+					bottomRightVertex = hgui::point(x, y);
 					ss >> color.r;
 					ss >> color.g;
 					ss >> color.b;
@@ -73,12 +78,15 @@ void DataManager::load(const std::string& path)
 				}
 			case shape::LINE:
 				{
-					hgui::point firstVertex, secondVertex;
+					hgui::point firstVertex;
+					hgui::point secondVertex;
+					float x;
+					float y;
 
-					ss >> firstVertex.x;
-					ss >> firstVertex.y;
-					ss >> secondVertex.x;
-					ss >> secondVertex.y;
+					ss >> x >> y;
+					firstVertex = hgui::point(x, y);
+					ss >> x >> y;
+					secondVertex = hgui::point(x, y);
 					ss >> color.r;
 					ss >> color.g;
 					ss >> color.b;
@@ -90,15 +98,19 @@ void DataManager::load(const std::string& path)
 				}
 			case shape::TRIANGLE:
 				{
-					hgui::point firstVertex, secondVertex, thirdVertex;
+					hgui::point firstVertex;
+					hgui::point secondVertex;
+					hgui::point thirdVertex;
 					bool fill;
+					float x;
+					float y;
 
-					ss >> firstVertex.x;
-					ss >> firstVertex.y;
-					ss >> secondVertex.x;
-					ss >> secondVertex.y;
-					ss >> thirdVertex.x;
-					ss >> thirdVertex.y;
+					ss >> x >> y;
+					firstVertex = hgui::point(x, y);
+					ss >> x >> y;
+					secondVertex = hgui::point(x, y);
+					ss >> x >> y;
+					thirdVertex = hgui::point(x, y);
 					ss >> color.r;
 					ss >> color.g;
 					ss >> color.b;
@@ -123,7 +135,7 @@ void DataManager::save(const std::string& path) const
 {
 	if (std::ofstream file(path); file.is_open())
 	{
-		for (const auto& shape : *m_shapes->get_shapes())
+		for (const auto& [id, shape] : *m_shapes->get_shapes())
 		{
 			hgui::kernel::shape::ShapeData data = shape->get_data();
 			if (const auto& points = std::get_if<std::pair<hgui::point, hgui::point>>(&data))

@@ -27,6 +27,7 @@ private:
 	bool m_randomDrawing;
 	std::vector<hgui::point> m_shapeDrawn;
 	hgui::point m_cursorPosition;
+	std::vector<std::string> m_order;
 
 	void set_main_menu();
 	void set_option_menu();

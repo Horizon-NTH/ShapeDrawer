@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 
-project(ShapeDrawer VERSION 1.0.0)
+project(ShapeDrawer VERSION 1.1)
 
 add_subdirectory(deps/HorizonGUI)
 

@@ -1,5 +1,9 @@
 # ShapeDrawer
 
+[![Release](https://img.shields.io/badge/Release-v1.1-blueviolet)](https://github.com/Horizon-NTH/ShapeDrawer/releases)
+[![Language](https://img.shields.io/badge/Language-C%2B%2B-0052cf)](https://en.wikipedia.org/wiki/C++)
+[![Licence](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 ![ShapeDrawer's Logo](assets/textures/ShapeDrawer.png)
 
 ## Introduction
@@ -66,3 +70,7 @@ To learn how to use this application, please refer to the [wiki](https://github.
 * **HorizonGUI**
 
     The code relies on [HorizonGUI](https://github.com/Horizon-NTH/HorizonGUI) for all the graphics-related functionality of the application.
+
+## License
+
+ShapeDrawer is licensed under the [MIT license](https://github.com/Horizon-NTH/ShapeDrawer/blob/master/LICENSE).
